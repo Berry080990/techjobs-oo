@@ -97,7 +97,6 @@ public class JobForm {
     public void setLocationId(int locationId) {
         this.locationId = locationId;
     }
-
     public int getCoreCompetencieId() {
         return coreCompetencieId;
     }

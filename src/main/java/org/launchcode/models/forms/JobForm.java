@@ -16,11 +16,14 @@ import java.util.ArrayList;
 public class JobForm {
 
     @NotNull
-    @Size(min=1, message = "Name may not be empty")
+    @Size(min=1, message = "Please enter a name!")
     private String name;
 
     @NotNull
     private int employerId;
+    private int locationId;
+    private int coreCompetencieId;
+    private int positionTypeId;
 
     /*
         TODO #3 - Included other fields needed to create a job,
@@ -42,6 +45,9 @@ public class JobForm {
         */
 
         employers = jobData.getEmployers().findAll();
+        locations = jobData.getLocations().findAll();
+        coreCompetencies = jobData.getCoreCompetencies().findAll();
+        positionTypes = jobData.getPositionTypes().findAll();
 
     }
 
@@ -84,6 +90,27 @@ public class JobForm {
     public void setCoreCompetencies(ArrayList<CoreCompetency> coreCompetencies) {
         this.coreCompetencies = coreCompetencies;
     }
+
+    public int getLocationId() {
+        return locationId;
+    }
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
+    }
+
+    public int getCoreCompetencieId() {
+        return coreCompetencieId;
+    }
+    public void setCoreCompetencieId(int coreCompetencieId) {
+        this.coreCompetencieId = coreCompetencieId;
+    }
+    public int getPositionTypeId() {
+        return positionTypeId;
+    }
+    public void setPositionTypeId(int positionTypeId) {
+        this.positionTypeId = positionTypeId;
+    }
+
 
     public ArrayList<PositionType> getPositionTypes() {
         return positionTypes;

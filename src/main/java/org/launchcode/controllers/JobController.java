@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.launchcode.models.Job;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -21,10 +23,10 @@ public class JobController {
 
     // The detail display for a given Job at URLs like /job?id=17
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String index(Model model, int id) {
+    public String index(Model model, @RequestParam(name = "id") int id) {
 
         // TODO #1 - get the Job with the given ID and pass it into the view
-
+        model.addAttribute(jobData.findById(id));
         return "job-detail";
     }
 
@@ -40,8 +42,21 @@ public class JobController {
         // TODO #6 - Validate the JobForm model, and if valid, create a
         // new Job and add it to the jobData data store. Then
         // redirect to the job detail view for the new Job.
+        if (errors.hasErrors()) {
+            model.addAttribute(jobForm);
+            return "new-job";
+        }
 
-        return "";
+        Job job = new Job(
+                jobForm.getName(),
+                JobData.getInstance().getEmployers().findById(jobForm.getEmployerId()),
+                JobData.getInstance().getLocations().findById(jobForm.getLocationId()),
+                JobData.getInstance().getPositionTypes().findById(jobForm.getPositionTypeId()),
+                JobData.getInstance().getCoreCompetencies().findById(jobForm.getCoreCompetencieId())
+        );
+        jobData.add(job);
+
+        return "redirect:?id=" + job.getId();
 
     }
 }
